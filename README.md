@@ -9,7 +9,7 @@ This project blends visual minimalism with cosmic vibes, exploring spatial balan
 
 ## 🌐 Live Demo
 
-🔗 [https://geospacemetry.vercel.app](https://geospacemetry.vercel.app)
+🔗 [https://geo-spacemetry.vercel.app/](https://geo-spacemetry.vercel.app/)
 
 Hosted on [Vercel](https://vercel.com) using [Next.js](https://nextjs.org/).
 
@@ -19,7 +19,7 @@ Hosted on [Vercel](https://vercel.com) using [Next.js](https://nextjs.org/).
 
 - Built with **Next.js** and **Three.js**
 - Fully responsive 3D scene
-- Central floating text with customizable message
+- Central floating text
 - Simple geometries orbiting in space
 - Clean and minimal UI
 - Optimized for modern browsers
@@ -30,8 +30,8 @@ Hosted on [Vercel](https://vercel.com) using [Next.js](https://nextjs.org/).
 
 - [Next.js](https://nextjs.org/) – App framework
 - [Three.js](https://threejs.org/) – WebGL rendering
-- [Vercel](https://vercel.com/) – Hosting & deployment
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
+- [Vercel](https://vercel.com/) – Hosting & deployment
 
 ---
 
