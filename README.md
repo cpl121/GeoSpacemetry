@@ -1,5 +1,9 @@
 # GeoSpaceMetry
 
+<p align="center">
+  <img src="./screenshot.png" alt="GeoSpacemetry Project Preview" width="700"/>
+</p>
+
 **GeoSpaceMetry** is an experimental 3D scene where geometry expands into space.  
 A central text floats in the void, surrounded by simple geometric forms in motion.
 
