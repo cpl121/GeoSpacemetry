@@ -3,6 +3,24 @@ import { useLoader } from "@react-three/fiber";
 import * as THREE from 'three'
 import { useMemo, useRef } from "react";
 import FadingMesh from "./FadingMesh";
+import FadingMeshMaterial from "./FadingMeshMaterial";
+
+const generateRandomGeometry = (length: number, multiplier: number) => {
+  return Array.from({ length }).map((_, i) => {
+    const position = [
+      (Math.random() - 0.5) * multiplier,
+      (Math.random() - 0.5) * multiplier,
+      (Math.random() - 0.5) * multiplier,
+    ]
+    const rotation = [
+      Math.random() * Math.PI,
+      Math.random() * Math.PI,
+      0,
+    ]
+    const scale = Math.random() * 1.5
+    return { key: i, position, rotation, scale }
+  })
+}
 
 const Scene = () => {
   // Fonts
@@ -10,83 +28,22 @@ const Scene = () => {
   const jackpotFontPath = 'fonts/Jackpot_Regular.json'
 
   // Matcaps
-  const matcapTexture = useLoader(THREE.TextureLoader, '/matcaps/matcap3.png')
-  const matcap2Texture = useLoader(THREE.TextureLoader, '/matcaps/matcap4.png')
+  const matcapTexture = useLoader(THREE.TextureLoader, '/matcaps/matcap2.png')
 
   const mainTextRef = useRef<THREE.Mesh>(null)
   const secondTextRef = useRef<THREE.Mesh>(null)
 
   const donutGeometry = useMemo(() => new THREE.TorusGeometry(0.3, 0.2, 32, 64), [])
-  const donuts = useMemo(() => {
-    return Array.from({ length: 150 }).map((_, i) => {
-      const position = [
-        (Math.random() - 0.5) * 50,
-        (Math.random() - 0.5) * 50,
-        (Math.random() - 0.5) * 50,
-      ]
-      const rotation = [
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        0,
-      ]
-      const scale = Math.random() * 1.5
-      return { key: i, position, rotation, scale }
-    })
-  }, [])
-
+  const donuts = generateRandomGeometry(150, 50)
+  
   const cubeGeometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), [])
-  const cubes = useMemo(() => {
-    return Array.from({ length: 100 }).map((_, i) => {
-      const position = [
-        (Math.random() - 0.5) * 35,
-        (Math.random() - 0.5) * 35,
-        (Math.random() - 0.5) * 35,
-      ]
-      const rotation = [
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        0,
-      ]
-      const scale = Math.random()
-      return { key: i, position, rotation, scale }
-    })
-  }, [])
-
+  const cubes = generateRandomGeometry(100, 35)
+  
   const coneGeometry = useMemo(() => new THREE.ConeGeometry(0.5, 1.5, 32), [])
-  const cones = useMemo(() => {
-    return Array.from({ length: 50 }).map((_, i) => {
-      const position = [
-        (Math.random() - 0.5) * 25,
-        (Math.random() - 0.5) * 25,
-        (Math.random() - 0.5) * 25,
-      ]
-      const rotation = [
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        0,
-      ]
-      const scale = Math.random() * 1.5
-      return { key: i, position, rotation, scale }
-    })
-  }, [])
-
+  const cones = generateRandomGeometry(50, 25)
+  
   const icosahedroGeometry = useMemo(() => new THREE.IcosahedronGeometry(1, 0), [])
-  const icosahedros = useMemo(() => {
-    return Array.from({ length: 25 }).map((_, i) => {
-      const position = [
-        (Math.random() - 0.5) * 25,
-        (Math.random() - 0.5) * 25,
-        (Math.random() - 0.5) * 25,
-      ]
-      const rotation = [
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        0,
-      ]
-      const scale = Math.random() * 1.5
-      return { key: i, position, rotation, scale }
-    })
-  }, [])
+  const icosahedros = generateRandomGeometry(25, 25)
 
   return (
           <>
@@ -110,13 +67,13 @@ const Scene = () => {
                 }}
               >
                 CPL121.eth
-                <meshMatcapMaterial matcap={matcap2Texture} />
+                <FadingMeshMaterial texture={matcapTexture} delay={3} />
               </Text3D>
               <Text3D
                 ref={secondTextRef}
                 font={jackpotFontPath}
                 size={0.3}
-                height={0.2}
+                height={0.3}
                 curveSegments={6}
                 bevelEnabled
                 bevelThickness={0.02}
@@ -127,7 +84,7 @@ const Scene = () => {
                 rotation={[0, Math.PI, 0]}
               >
                 Digital Identity Rendered
-                <meshMatcapMaterial matcap={matcapTexture} />
+                <FadingMeshMaterial texture={matcapTexture} delay={5} />
               </Text3D>
             </Center>
       
@@ -138,7 +95,7 @@ const Scene = () => {
                 position={position as [number, number, number]}
                 rotation={rotation as [number, number, number]}
                 scale={[scale, scale, scale]}
-                delay={8}
+                delay={12}
                />
             ))}
             {cubes.map(({ key, scale, position, rotation }) => (
@@ -148,7 +105,7 @@ const Scene = () => {
                 position={position as [number, number, number]}
                 rotation={rotation as [number, number, number]}
                 scale={[scale, scale, scale]}
-                delay={6}
+                delay={10}
               />
             ))}
             {cones.map(({ key, scale, position, rotation }) => (
@@ -158,7 +115,7 @@ const Scene = () => {
                 position={position as [number, number, number]}
                 rotation={rotation as [number, number, number]}
                 scale={[scale, scale, scale]}
-                delay={4}
+                delay={7}
               />
             ))}
             {icosahedros.map(({ key, scale, position, rotation }) => (
@@ -168,7 +125,7 @@ const Scene = () => {
                 position={position as [number, number, number]}
                 rotation={rotation as [number, number, number]}
                 scale={[scale, scale, scale]}
-                delay={10}
+                delay={15}
               />
             ))}
         </>
