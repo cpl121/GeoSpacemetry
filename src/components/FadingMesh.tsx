@@ -1,6 +1,7 @@
 import { useRef } from 'react'
-import { useFrame, useLoader } from '@react-three/fiber'
+import { useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
+import FadingMeshMaterial from './FadingMeshMaterial'
 
 const FadingMesh = ({
   geometry,
@@ -14,27 +15,9 @@ const FadingMesh = ({
   rotation?: [number, number, number]
   scale?: [number, number, number]
   delay?: number
-  color?: string
 }) => {
   const matcap3Texture = useLoader(THREE.TextureLoader, '/matcaps/matcap.png')
-
   const meshRef = useRef<THREE.Mesh>(null)
-  const materialRef = useRef<THREE.MeshStandardMaterial>(null)
-  const startTime = useRef<number | null>(null)
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime()
-
-    if (startTime.current === null && t > delay) {
-      startTime.current = t
-    }
-
-    if (startTime.current !== null && materialRef.current) {
-      const elapsed = t - startTime.current
-      const opacity = THREE.MathUtils.clamp(elapsed / 1, 0, 1)
-      materialRef.current.opacity = opacity
-    }
-  })
 
   return (
     <mesh
@@ -44,12 +27,7 @@ const FadingMesh = ({
       rotation={rotation}
       scale={scale}
     >
-      <meshMatcapMaterial 
-        matcap={matcap3Texture}
-        ref={materialRef}
-        transparent
-        opacity={0}
-      />
+      <FadingMeshMaterial texture={matcap3Texture} delay={delay} />
     </mesh>
   )
 }
